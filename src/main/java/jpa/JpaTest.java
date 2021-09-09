@@ -4,6 +4,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 
+import entities.Department;
+import entities.Pro;
+
 public class JpaTest {
 
 	/**
@@ -17,6 +20,9 @@ public class JpaTest {
 
 
 		try {
+			Pro pro = new Pro("Laye",( new Department("Rennes")), "derma");
+			//test.createCompte(pro, "laye", "salut");
+			manager.persist(pro);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -27,6 +33,7 @@ public class JpaTest {
 		manager.close();
 		EntityManagerHelper.closeEntityManagerFactory();
 		//		factory.close();
+		System.out.println("fin d'execution!!!");
 	}
 
 
