@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-@Entity
+//@Entity
 public class Department {
 
 	private Long id;
@@ -26,8 +26,8 @@ public class Department {
 		this.name = name;
 	}
 
-	@Id
-	@GeneratedValue
+	//@Id
+	//@GeneratedValue
 	public Long getId() {
 		return id;
 	}
@@ -44,7 +44,6 @@ public class Department {
 		this.name = name;
 	}
 
-	@OneToMany(mappedBy = "department", cascade = CascadeType.PERSIST)
 	public List<Users> getPro() {
 		return users;
 	}

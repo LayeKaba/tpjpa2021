@@ -12,15 +12,15 @@ public class Users {
 	private Long id;
 	
 	private String name;
-	private Department department;
+	private String adress;
 	
 	
 	private Compte userCompte;
 
-	public Users( String name, Department department) {
+	public Users( String name, String adress) {
 		super();
 		this.name = name;
-		this.department = department;
+		this.adress = adress;
 	}
 	
 	
@@ -37,11 +37,9 @@ public class Users {
 
 
 
-	public void setDepartment(Department department) {
-		this.department = department;
+	public void setAdress(String adress) {
+		this.adress = adress;
 	}
-
-
 
 	@Id
 	@GeneratedValue
@@ -57,13 +55,11 @@ public class Users {
 	public void setName(String name) {
 		this.name = name;
 	}
-	@ManyToOne
-	public  Department getDepartment() {
-		return department;
+
+	public  String getAdress() {
+		return adress;
 	}
-	public void setAdresse(Department department) {
-		this.department = department;
-	}
+
 	public Users() {
 		super();
 	}

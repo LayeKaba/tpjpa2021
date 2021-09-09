@@ -29,7 +29,7 @@ public class CompteDao {
 		EntityTransaction tx = manager.getTransaction();
 		tx.begin();
 		try {
-			Pro pro = new Pro("Laye",( new Department("Rennes")), "derma");
+			Pro pro = new Pro("Laye","Rennes", "derma");
 			test.createCompte(pro, "laye", "salut");
 			
 		} catch (Exception e) {
@@ -40,17 +40,34 @@ public class CompteDao {
 		//test.listEmployees();
 			
    	 manager.close();
-		System.out.println(".. done");
+		System.out.println("... done");
 	}
 
-	private void logIn(String pseudo, String mdp )
+	private Users logIn(String pseudo, String mdp )
 	{
 		Compte result = manager.createQuery("Select a From Compte a where a.pseudo=:pseudo AND a.mdp=:mdp", Compte.class).setParameter(":pseudo", pseudo).setParameter(":mdp", mdp).getSingleResult();
 		
 		if (result != null)
+		{
 			result.setLogged(true);
+			manager.persist(result);
+			System.out.println("Vous etes deconnecté avec succes");
+		}
 		
+		return result.getUserCount();
 	}
+	
+	private void logOut(Users users)
+	{
+		Compte result = manager.createQuery("Select a From Compte a where a.pseudo=:pseudo", Compte.class).setParameter("pseudo", users.getUserCompte().getPseudo()).setParameter(":mdp", users.getUserCompte().getMpd()).getSingleResult();
+		if (result!= null)
+		{
+			users.getUserCompte().setLogged(false);
+			manager.persist(users);
+			System.out.println("Vous etes deconnecté avec succes");
+		}
+	}
+	
 	private void createCompte(Users users, String pseudo, String mdp) {
 		int numOfCompte = manager.createQuery("Select a From Compte a", Compte.class).getResultList().size();
 		if (numOfCompte == 0) {
@@ -60,7 +77,6 @@ public class CompteDao {
 			}
 			else
 			{
-				manager.persist(users.getDepartment());
 				manager.persist(users);
 				Compte newCompte = new Compte(pseudo,mdp);
 				newCompte.setUserCount(users);
@@ -91,13 +107,6 @@ public class CompteDao {
 		
 		return result;
 	}
-	private void logIn()
-	{
-		
-	}
-	private void logOut()
-	{
-		
-	}
+	
 
 }

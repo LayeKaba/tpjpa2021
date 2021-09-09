@@ -20,7 +20,7 @@ public class JpaTest {
 
 
 		try {
-			Pro pro = new Pro("Laye",( new Department("Rennes")), "derma");
+			Pro pro = new Pro("Laye","Rennes", "derma");
 			//test.createCompte(pro, "laye", "salut");
 			manager.persist(pro);
 
