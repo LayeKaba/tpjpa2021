@@ -43,7 +43,7 @@ public class CompteDao {
 		System.out.println("... done");
 	}
 
-	private Users logIn(String pseudo, String mdp )
+	public Users logIn(String pseudo, String mdp )
 	{
 		Compte result = manager.createQuery("Select a From Compte a where a.pseudo=:pseudo AND a.mdp=:mdp", Compte.class).setParameter(":pseudo", pseudo).setParameter(":mdp", mdp).getSingleResult();
 		
@@ -51,38 +51,44 @@ public class CompteDao {
 		{
 			result.setLogged(true);
 			manager.persist(result);
-			System.out.println("Vous etes deconnecté avec succes");
+			System.out.println("Vous etes connecté avec succes");
+			return result.getUserCount();
 		}
+		else System.out.println("Votre speudo ou mot de passe est incorrect");
 		
-		return result.getUserCount();
+		return new Users();
 	}
 	
-	private void logOut(Users users)
+	public void logOut(Users users)
 	{
 		Compte result = manager.createQuery("Select a From Compte a where a.pseudo=:pseudo", Compte.class).setParameter("pseudo", users.getUserCompte().getPseudo()).setParameter(":mdp", users.getUserCompte().getMpd()).getSingleResult();
 		if (result!= null)
 		{
 			users.getUserCompte().setLogged(false);
 			manager.persist(users);
+			manager.persist(result);
 			System.out.println("Vous etes deconnecté avec succes");
 		}
 	}
 	
-	private void createCompte(Users users, String pseudo, String mdp) {
-		int numOfCompte = manager.createQuery("Select a From Compte a", Compte.class).getResultList().size();
-		if (numOfCompte == 0) {
+	public  void createCompte(Users users, String pseudo, String mdp)
+	{
 			if (existCompte(pseudo))
 			{
 				System.out.println("Ce compte existe deja!!!");
 			}
 			else
 			{
-				manager.persist(users);
-				Compte newCompte = new Compte(pseudo,mdp);
-				newCompte.setUserCount(users);
-				manager.persist(newCompte);
+				//if (users.isExists())
+				{
+					Compte newCompte = new Compte(pseudo,mdp);
+					newCompte.setUserCount(users);
+					users.setUserCompte(newCompte);
+					manager.persist(users);
+					manager.persist(newCompte);
+				}
 			}
-		}
+		
 	}
 
 	private void listCompte() {

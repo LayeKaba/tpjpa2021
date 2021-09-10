@@ -4,9 +4,11 @@ package entities;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
 import javax.persistence.OneToMany;
 
 @Entity
+@Inheritance
 public class Pro  extends Users{
 	private String speciality;
 	private List<RendezVous> allRdv;

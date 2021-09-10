@@ -20,6 +20,18 @@ public class RendezVous {
 	private Pro proCreator;
 	private List<Creneaux> allCreneaux;
 	
+	
+	
+	public RendezVous() {
+		super();
+	}
+	public RendezVous(Date date, Long duree, String intitule, Pro proCreator) {
+		super();
+		this.date = date;
+		this.duree = duree;
+		this.intitule = intitule;
+		this.proCreator = proCreator;
+	}
 	@Id
 	@GeneratedValue
 	public Long getId() {

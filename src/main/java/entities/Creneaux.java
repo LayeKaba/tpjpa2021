@@ -10,10 +10,17 @@ import javax.persistence.OneToMany;
 @Entity
 public class Creneaux {
 
+	
 	private Long id;
 	
+	private Long duree;
 	private RendezVous rdvPere;
 	private Patient userTaked;
+
+	public Creneaux(RendezVous rendezvous, Long duree) {
+		this.rdvPere= rendezvous;
+		this.duree= duree;
+	}
 
 	@ManyToOne
 	public Patient getUserTaked() {
@@ -43,4 +50,8 @@ public class Creneaux {
 		this.rdvPere = rdvPere;
 	}
 	
+	public boolean isDisponible()
+	{
+		return this.getUserTaked()== null;
+	}
 }

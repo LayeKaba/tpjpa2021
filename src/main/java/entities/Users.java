@@ -63,5 +63,11 @@ public class Users {
 	public Users() {
 		super();
 	}
+
+
+	public boolean isExists() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }
