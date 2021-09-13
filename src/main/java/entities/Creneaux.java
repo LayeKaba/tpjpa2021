@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class Creneaux {
@@ -17,6 +18,10 @@ public class Creneaux {
 	private RendezVous rdvPere;
 	private Patient userTaked;
 
+	public Creneaux() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public Creneaux(RendezVous rendezvous, Long duree) {
 		this.rdvPere= rendezvous;
 		this.duree= duree;
@@ -50,6 +55,7 @@ public class Creneaux {
 		this.rdvPere = rdvPere;
 	}
 	
+	@Transient
 	public boolean isDisponible()
 	{
 		return this.getUserTaked()== null;

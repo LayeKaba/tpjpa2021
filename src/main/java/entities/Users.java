@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class Users {
@@ -64,7 +65,7 @@ public class Users {
 		super();
 	}
 
-
+	@Transient
 	public boolean isExists() {
 		// TODO Auto-generated method stub
 		return false;

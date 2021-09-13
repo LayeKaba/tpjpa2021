@@ -9,6 +9,7 @@ import javax.persistence.Persistence;
 
 import entities.Compte;
 import entities.Department;
+import entities.Patient;
 import entities.Pro;
 import entities.Users;
 import jpa.JpaTest;
@@ -30,14 +31,25 @@ public class CompteDao {
 		tx.begin();
 		try {
 			Pro pro = new Pro("Laye","Rennes", "derma");
+			Pro pro1 = new Pro("Laye1","Rennes", "neuro");
+			Pro pro2 = new Pro("Laye3","Rennes", "Kine");
+			Patient patient = new Patient("Kas","Rennes");
+			Patient patient2 = new Patient("Kas1","Rennes");
 			test.createCompte(pro, "laye", "salut");
-			
+			test.createCompte(pro1, "laye1", "mdp");
+			test.createCompte(pro2, "laye2", "salut");
+			test.createCompte(patient, "Kas", "salut");
+			test.createCompte(patient2, "Kas2", "salut");
+			Users users = test.logIn("laye", "salut");
+			test.logOut(users);
+			test.logIn( "Kas", "salut");
+			//users.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		tx.commit();
 
-		//test.listEmployees();
+		test.listCompte();
 			
    	 manager.close();
 		System.out.println("... done");
@@ -45,14 +57,16 @@ public class CompteDao {
 
 	public Users logIn(String pseudo, String mdp )
 	{
-		Compte result = manager.createQuery("Select a From Compte a where a.pseudo=:pseudo AND a.mdp=:mdp", Compte.class).setParameter(":pseudo", pseudo).setParameter(":mdp", mdp).getSingleResult();
+		List<Compte> result = manager.createQuery("Select a From Compte a where a.pseudo= :pseudo AND a.mpd=:mdp", Compte.class).setParameter("pseudo", pseudo).setParameter("mdp", mdp).getResultList();
 		
-		if (result != null)
+		if (result != null && result.size()==1)
 		{
-			result.setLogged(true);
-			manager.persist(result);
+			Compte compte = result.get(0);
+			
+			compte.setLogged(true);
+			manager.persist(compte);
 			System.out.println("Vous etes connecté avec succes");
-			return result.getUserCount();
+			return result.get(0).getUserCount();
 		}
 		else System.out.println("Votre speudo ou mot de passe est incorrect");
 		
@@ -61,7 +75,7 @@ public class CompteDao {
 	
 	public void logOut(Users users)
 	{
-		Compte result = manager.createQuery("Select a From Compte a where a.pseudo=:pseudo", Compte.class).setParameter("pseudo", users.getUserCompte().getPseudo()).setParameter(":mdp", users.getUserCompte().getMpd()).getSingleResult();
+		Compte result = manager.createQuery("Select a From Compte a where a.pseudo=:pseudo ", Compte.class).setParameter("pseudo", users.getUserCompte().getPseudo()).getSingleResult();
 		if (result!= null)
 		{
 			users.getUserCompte().setLogged(false);
@@ -73,7 +87,7 @@ public class CompteDao {
 	
 	public  void createCompte(Users users, String pseudo, String mdp)
 	{
-			if (existCompte(pseudo))
+			if (existCompte(pseudo)) 
 			{
 				System.out.println("Ce compte existe deja!!!");
 			}
@@ -100,9 +114,9 @@ public class CompteDao {
 	}
 	private boolean existCompte(String pseudo)
 	{
-		Compte result = manager.createQuery("Select a From Compte a where a.pseudo=:pseudo", Compte.class).setParameter("pseudo", pseudo).getSingleResult();
+		Long result = manager.createQuery("select count(a) From Compte a where a.pseudo=:pseudo", Long.class).setParameter("pseudo", pseudo).getSingleResult();
 		
-		if (result!= null)
+		if (result>0)
 			return true;
 		else
 			return false;

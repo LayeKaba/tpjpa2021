@@ -10,7 +10,7 @@ public class Compte {
 
 	private Long id;
 	private String pseudo;
-	private String mpd;
+	private String mdp;
 	
 	private Users userCount;
 	private boolean isLogged=false;
@@ -33,15 +33,15 @@ public class Compte {
 		this.pseudo = pseudo;
 	}
 	public String getMpd() {
-		return mpd;
+		return mdp;
 	}
 	public Compte(String pseudo, String mpd) {
 		super();
 		this.pseudo = pseudo;
-		this.mpd = mpd;
+		this.mdp = mpd;
 	}
 	public void setMpd(String mpd) {
-		this.mpd = mpd;
+		this.mdp = mpd;
 	}
 	@OneToOne
 	public Users getUserCount() {
