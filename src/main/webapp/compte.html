@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Salut!!!</h1>
+	<form name="inscrire" method="POST" action="/CompteServlet">
+		<label> Nom et prenoms:
+			<input type="text" name="name"/>
+		</label><br>
+		<label> Adresse
+			<input type="text" name="adresse"/>
+		</label><br>
+		<label> specialité
+			<input type="text" name="speciality"/>
+		</label><br>
+		<label> Vous êtes:<br> 
+			Professionnel<input type="radio" value="Professionnel" name="type"/>
+			Patient<input type="radio" value="Patient" name="type"/><br>
+		</label>
+		<label> Pseudo
+			<input type="text" name="pseudo"/>
+		</label><br>
+		<label> Mot de passe
+			<input type="password" name="mdp"/>
+		</label><br>
+		<input value="creer un compte" type="submit">
+	</form>
+	
+	<!--  form name="connecter" method="POST" action="/compte">
+		
+	</form-->
+</body>
+</html>
